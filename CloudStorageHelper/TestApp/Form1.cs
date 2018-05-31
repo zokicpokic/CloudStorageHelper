@@ -17,33 +17,28 @@ namespace TestApp
             InitializeComponent();
         }
 
-        private void btnFileToBlob_Click(object sender, EventArgs e)
+        private void btnFileToBlob_Click_1(object sender, EventArgs e)
         {
             var frm = new FileToBlob();
             frm.ShowDialog();
         }
 
-        private void btnBlobToFile_Click(object sender, EventArgs e)
-        {
-            var frm = new BlobToFile();
-            frm.ShowDialog();
-        }
-
-        private void btnDirectoryToBlob_Click(object sender, EventArgs e)
+        private void btnDirectoryToBlob_Click_1(object sender, EventArgs e)
         {
             var frm = new DirectoryToBlob();
             frm.ShowDialog();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnBlobToFile_Click_1(object sender, EventArgs e)
         {
-            var frm = new BlobDirToLocalDir();
+            var frm = new BlobToFile();
             frm.ShowDialog();
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
+        private void btnBlobDirToLocalDir_Click(object sender, EventArgs e)
         {
-
+            var frm = new BlobDirToLocalDir();
+            frm.ShowDialog();
         }
     }
 }
