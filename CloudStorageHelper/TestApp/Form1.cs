@@ -28,5 +28,11 @@ namespace TestApp
             var frm = new BlobToFile();
             frm.ShowDialog();
         }
+
+        private void btnDirectoryToBlob_Click(object sender, EventArgs e)
+        {
+            var frm = new DirectoryToBlob();
+            frm.ShowDialog();
+        }
     }
 }

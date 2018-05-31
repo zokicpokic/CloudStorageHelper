@@ -31,11 +31,13 @@
             this.pnBlob = new System.Windows.Forms.Panel();
             this.btnFileToBlob = new System.Windows.Forms.Button();
             this.btnBlobToFile = new System.Windows.Forms.Button();
+            this.btnDirectoryToBlob = new System.Windows.Forms.Button();
             this.pnBlob.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnBlob
             // 
+            this.pnBlob.Controls.Add(this.btnDirectoryToBlob);
             this.pnBlob.Controls.Add(this.btnBlobToFile);
             this.pnBlob.Controls.Add(this.btnFileToBlob);
             this.pnBlob.Location = new System.Drawing.Point(39, 53);
@@ -47,7 +49,7 @@
             // 
             this.btnFileToBlob.Location = new System.Drawing.Point(21, 27);
             this.btnFileToBlob.Name = "btnFileToBlob";
-            this.btnFileToBlob.Size = new System.Drawing.Size(211, 23);
+            this.btnFileToBlob.Size = new System.Drawing.Size(111, 23);
             this.btnFileToBlob.TabIndex = 0;
             this.btnFileToBlob.Text = "File to Blob";
             this.btnFileToBlob.UseVisualStyleBackColor = true;
@@ -55,13 +57,23 @@
             // 
             // btnBlobToFile
             // 
-            this.btnBlobToFile.Location = new System.Drawing.Point(263, 27);
+            this.btnBlobToFile.Location = new System.Drawing.Point(269, 27);
             this.btnBlobToFile.Name = "btnBlobToFile";
-            this.btnBlobToFile.Size = new System.Drawing.Size(211, 23);
+            this.btnBlobToFile.Size = new System.Drawing.Size(111, 23);
             this.btnBlobToFile.TabIndex = 1;
             this.btnBlobToFile.Text = "Blob To File";
             this.btnBlobToFile.UseVisualStyleBackColor = true;
             this.btnBlobToFile.Click += new System.EventHandler(this.btnBlobToFile_Click);
+            // 
+            // btnDirectoryToBlob
+            // 
+            this.btnDirectoryToBlob.Location = new System.Drawing.Point(145, 26);
+            this.btnDirectoryToBlob.Name = "btnDirectoryToBlob";
+            this.btnDirectoryToBlob.Size = new System.Drawing.Size(111, 23);
+            this.btnDirectoryToBlob.TabIndex = 2;
+            this.btnDirectoryToBlob.Text = "Directory To Blob";
+            this.btnDirectoryToBlob.UseVisualStyleBackColor = true;
+            this.btnDirectoryToBlob.Click += new System.EventHandler(this.btnDirectoryToBlob_Click);
             // 
             // Form1
             // 
@@ -81,6 +93,7 @@
         private System.Windows.Forms.Panel pnBlob;
         private System.Windows.Forms.Button btnFileToBlob;
         private System.Windows.Forms.Button btnBlobToFile;
+        private System.Windows.Forms.Button btnDirectoryToBlob;
     }
 }
 

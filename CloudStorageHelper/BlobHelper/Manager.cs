@@ -146,7 +146,7 @@ namespace BlobHelper
             stopWatch.Stop();
         }
 
-        public async Task TransferLocalDirectoryToAzureBlobDirectory(string LocalSourceFilePath, string ContainerName)
+        public async Task TransferLocalDirectoryToAzureBlobDirectory(string LocalSourceDirPath, string ContainerName)
         {
             CloudBlobDirectory blobDirectory = GetBlobDirectory(ContainerName);
             TransferCheckpoint checkpoint = null;
@@ -162,7 +162,7 @@ namespace BlobHelper
 
             try
             {
-                task = TransferManager.UploadDirectoryAsync(LocalSourceFilePath, blobDirectory, options, context, cancellationSource.Token);
+                task = TransferManager.UploadDirectoryAsync(LocalSourceDirPath, blobDirectory, options, context, cancellationSource.Token);
                 await task;
             }
             catch (Exception ex)
