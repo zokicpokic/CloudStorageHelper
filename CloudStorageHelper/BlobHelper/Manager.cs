@@ -115,7 +115,38 @@ namespace BlobHelper
             stopWatch.Stop();
         }
 
+        public async Task DownloadAzureBlobDirectoryToLocalDirectory(string LocalSourceDirPath, string ContainerName, bool RecursiveDownload = true)
+        {
+            CloudBlobDirectory blobDirectory = GetBlobDirectory(ContainerName);
+            TransferCheckpoint checkpoint = null;
+            DirectoryTransferContext context = GetDirectoryTransferContext(checkpoint);
+            CancellationTokenSource cancellationSource = new CancellationTokenSource(10000000);
+            Stopwatch stopWatch = Stopwatch.StartNew();
+            Task task;
 
+            DownloadDirectoryOptions options = new DownloadDirectoryOptions()
+            {
+                Recursive = RecursiveDownload
+            };
+
+            try
+            {
+                task = TransferManager.DownloadDirectoryAsync (blobDirectory, LocalSourceDirPath, options, context, cancellationSource.Token);
+                await task;
+            }
+            catch (Exception ex)
+            {
+                if (Error != null)
+                    Error(ex);
+            }
+
+            if (cancellationSource.IsCancellationRequested)
+            {
+                //autoretry
+            }
+
+            stopWatch.Stop();
+        }
         public async Task TransferLocalFileToAzureBlob(string LocalSourceFilePath, string ContainerName, string BlobName)
         {
 

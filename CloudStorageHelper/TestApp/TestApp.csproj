@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlobDirToLocalDir.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BlobDirToLocalDir.Designer.cs">
+      <DependentUpon>BlobDirToLocalDir.cs</DependentUpon>
+    </Compile>
     <Compile Include="BlobToFile.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,6 +79,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="BlobDirToLocalDir.resx">
+      <DependentUpon>BlobDirToLocalDir.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BlobToFile.resx">
       <DependentUpon>BlobToFile.cs</DependentUpon>
     </EmbeddedResource>
