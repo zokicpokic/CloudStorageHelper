@@ -12,26 +12,26 @@ using BlobHelper;
 
 namespace TestApp
 {
-    public partial class FileToBlob : Form
+    public partial class BlobToFile : Form
     {
-        public FileToBlob()
+        public BlobToFile()
         {
             InitializeComponent();
         }
 
         private void btnSearchFB_Click(object sender, EventArgs e)
         {
-            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-               txtFB.Text = openFileDialog1.FileName;
+                txtFB.Text = saveFileDialog1.FileName;
             }
         }
 
-        private void FileToBlob_Load(object sender, EventArgs e)
+        private void BlobToFile_Load(object sender, EventArgs e)
         {
             var containerNames = ConfigurationManager.AppSettings.Get("containerName");
             var cArr = containerNames.Split(',');
-            for (int i=0; i< cArr.Length; i++)
+            for (int i = 0; i < cArr.Length; i++)
             {
                 cmbBlobContainers.Items.Add(cArr[i]);
             }
@@ -45,7 +45,7 @@ namespace TestApp
             Manager mng = new Manager(accName, accKey);
             mng.Error += Mng_Error;
             mng.BytesTransferred += Mng_BytesTransferred;
-            await mng.TransferLocalFileToAzureBlob(txtFB.Text, cmbBlobContainers.SelectedItem.ToString(), txtBlobName.Text);
+            await mng.DownloadAzureBlobToLocalFile(txtFB.Text, cmbBlobContainers.SelectedItem.ToString(), txtBlobName.Text);
             this.Close();
         }
 

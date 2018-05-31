@@ -85,6 +85,37 @@ namespace BlobHelper
             return blobDirectory;
         }
 
+        public async Task DownloadAzureBlobToLocalFile(string DestinationFullFilePath, string ContainerName, string BlobName)
+        {
+            CloudBlockBlob blob = GetBlob(ContainerName, BlobName);
+            TransferCheckpoint checkpoint = null;
+            SingleTransferContext context = GetSingleTransferContext(checkpoint);
+            CancellationTokenSource cancellationSource = new CancellationTokenSource(10000000);
+
+            Stopwatch stopWatch = Stopwatch.StartNew();
+            Task task;
+
+            try
+            {
+                task = TransferManager.DownloadAsync(blob, DestinationFullFilePath, null, context, cancellationSource.Token);  //(LocalSourceFilePath, blob, null, context, cancellationSource.Token);
+                await task;
+            }
+            catch (Exception ex)
+            {
+                if (Error != null)
+                    Error(ex);
+            }
+
+            if (cancellationSource.IsCancellationRequested)
+            {
+
+                //autoretry
+            }
+
+            stopWatch.Stop();
+        }
+
+
         public async Task TransferLocalFileToAzureBlob(string LocalSourceFilePath, string ContainerName, string BlobName)
         {
 

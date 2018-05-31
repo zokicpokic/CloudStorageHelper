@@ -22,5 +22,11 @@ namespace TestApp
             var frm = new FileToBlob();
             frm.ShowDialog();
         }
+
+        private void btnBlobToFile_Click(object sender, EventArgs e)
+        {
+            var frm = new BlobToFile();
+            frm.ShowDialog();
+        }
     }
 }

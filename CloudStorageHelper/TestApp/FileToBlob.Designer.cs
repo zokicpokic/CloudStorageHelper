@@ -106,7 +106,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(398, 300);
+            this.btnOK.Location = new System.Drawing.Point(398, 222);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 7;
@@ -126,7 +126,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(495, 359);
+            this.ClientSize = new System.Drawing.Size(495, 267);
             this.Controls.Add(this.lblTransfer);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.cmbBlobContainers);
