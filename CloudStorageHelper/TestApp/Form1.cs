@@ -40,5 +40,10 @@ namespace TestApp
             var frm = new BlobDirToLocalDir();
             frm.ShowDialog();
         }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }
