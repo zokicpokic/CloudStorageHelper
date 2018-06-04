@@ -22,6 +22,9 @@ namespace AzureStorage
         public event ErrorDelegate Error;
         public event BytesTransferedDelegate BytesTransferred;
         public event ExposeTaskCancelationDelegate ExposeTaskCancelation;
+
+        public bool StopFlag = false;
+
         public BlobManager(string accountName, string accountKey, int autoRecoveryAttempts = 0)
         {
             try
@@ -91,6 +94,8 @@ namespace AzureStorage
 
         public async Task DownloadAzureBlobToLocalFile(string DestinationFullFilePath, string ContainerName, string BlobName)
         {
+
+
             CloudBlockBlob blob = GetBlob(ContainerName, BlobName);
             TransferCheckpoint checkpoint = null;
             SingleTransferContext context = GetSingleTransferContext(checkpoint);
