@@ -10,6 +10,8 @@ namespace BlobHelper
 {
     public delegate void ErrorDelegate(Exception ex);
     public delegate void BytesTransferedDelegate(long bytesTransferred);
+    public delegate void ExposeTaskCancelationDelegate(Task task, CancellationTokenSource cts);
+
     public class Manager
     {
         private string _accountName = string.Empty;
@@ -18,7 +20,7 @@ namespace BlobHelper
 
         public event ErrorDelegate Error;
         public event BytesTransferedDelegate BytesTransferred;
-
+        public event ExposeTaskCancelationDelegate ExposeTaskCancelation;
         public Manager(string accountName, string accountKey)
         {
             try
@@ -161,6 +163,8 @@ namespace BlobHelper
             try
             {
                 task = TransferManager.UploadAsync(LocalSourceFilePath, blob, null, context, cancellationSource.Token);
+                if (ExposeTaskCancelation != null)
+                    ExposeTaskCancelation(task, cancellationSource);
                 await task;
             }
             catch (Exception ex) { 

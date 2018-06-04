@@ -19,6 +19,7 @@ namespace TestApp
             InitializeComponent();
         }
 
+        private TaskCancel _taskCancel = null;
         private void btnSearchFB_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -45,8 +46,14 @@ namespace TestApp
             Manager mng = new Manager(accName, accKey);
             mng.Error += Mng_Error;
             mng.BytesTransferred += Mng_BytesTransferred;
+            mng.ExposeTaskCancelation += Mng_ExposeTaskCancelation;
             await mng.TransferLocalFileToAzureBlob(txtFB.Text, cmbBlobContainers.SelectedItem.ToString(), txtBlobName.Text);
             this.Close();
+        }
+
+        private void Mng_ExposeTaskCancelation(Task task, System.Threading.CancellationTokenSource cts)
+        {
+            _taskCancel = new TaskCancel { task = task, cts = cts };
         }
 
         private void Mng_BytesTransferred(long bytesTransferred)
@@ -58,6 +65,13 @@ namespace TestApp
         {
             MessageBox.Show(ex.Message);
             btnOK.Enabled = false;
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            btnCancel.Text = btnCancel.Text.ToLower().Equals("cancel") ? "Retry" : "Cancel";
+            if (_taskCancel != null && _taskCancel.cts != null)
+                _taskCancel.cts.Cancel();
         }
     }
 }

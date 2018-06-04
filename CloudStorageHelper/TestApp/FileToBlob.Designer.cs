@@ -38,6 +38,7 @@
             this.cmbBlobContainers = new System.Windows.Forms.ComboBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.lblTransfer = new System.Windows.Forms.Label();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtFB
@@ -122,11 +123,22 @@
             this.lblTransfer.Size = new System.Drawing.Size(0, 13);
             this.lblTransfer.TabIndex = 8;
             // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(290, 222);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(86, 21);
+            this.btnCancel.TabIndex = 9;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
             // FileToBlob
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(495, 267);
+            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.lblTransfer);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.cmbBlobContainers);
@@ -158,5 +170,6 @@
         private System.Windows.Forms.ComboBox cmbBlobContainers;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Label lblTransfer;
+        private System.Windows.Forms.Button btnCancel;
     }
 }

@@ -79,6 +79,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TaskCancel.cs" />
     <EmbeddedResource Include="BlobDirToLocalDir.resx">
       <DependentUpon>BlobDirToLocalDir.cs</DependentUpon>
     </EmbeddedResource>
