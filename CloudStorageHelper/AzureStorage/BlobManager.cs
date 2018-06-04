@@ -94,8 +94,6 @@ namespace AzureStorage
 
         public async Task DownloadAzureBlobToLocalFile(string DestinationFullFilePath, string ContainerName, string BlobName)
         {
-
-
             CloudBlockBlob blob = GetBlob(ContainerName, BlobName);
             TransferCheckpoint checkpoint = null;
             SingleTransferContext context = GetSingleTransferContext(checkpoint);
@@ -219,7 +217,10 @@ namespace AzureStorage
 
             if (cancellationSource.IsCancellationRequested)
             {
-
+                Thread.Sleep(3000);
+                checkpoint = context.LastCheckpoint;
+                context = GetDirectoryTransferContext(checkpoint);
+                await TransferManager.UploadDirectoryAsync(LocalSourceDirPath, blobDirectory, options, context);
 
             }
 
