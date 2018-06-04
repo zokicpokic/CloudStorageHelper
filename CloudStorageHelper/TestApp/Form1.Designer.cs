@@ -42,7 +42,7 @@
             this.groupBox1.Controls.Add(this.btnBlobDirToLocalDir);
             this.groupBox1.Controls.Add(this.btnDirectoryToBlob);
             this.groupBox1.Controls.Add(this.btnBlobToFile);
-            this.groupBox1.Location = new System.Drawing.Point(25, 32);
+            this.groupBox1.Location = new System.Drawing.Point(23, 32);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(296, 100);
             this.groupBox1.TabIndex = 2;

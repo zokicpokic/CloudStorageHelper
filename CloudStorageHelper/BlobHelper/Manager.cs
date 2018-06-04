@@ -16,17 +16,19 @@ namespace BlobHelper
     {
         private string _accountName = string.Empty;
         private string _accountKey = string.Empty;
+        private int _autoRecoveryAttempts = 0;
         private CloudStorageAccount _account = null;
 
         public event ErrorDelegate Error;
         public event BytesTransferedDelegate BytesTransferred;
         public event ExposeTaskCancelationDelegate ExposeTaskCancelation;
-        public Manager(string accountName, string accountKey)
+        public Manager(string accountName, string accountKey, int autoRecoveryAttempts =0)
         {
             try
             {
                 _accountKey = accountKey;
                 _accountName = accountName;
+                _autoRecoveryAttempts = autoRecoveryAttempts;
                 string storageConnectionString = "DefaultEndpointsProtocol=https;AccountName=" + accountName + ";AccountKey=" + accountKey;
                 _account = CloudStorageAccount.Parse(storageConnectionString);
             }
@@ -155,7 +157,7 @@ namespace BlobHelper
             CloudBlockBlob blob = GetBlob(ContainerName, BlobName);
             TransferCheckpoint checkpoint = null;
             SingleTransferContext context = GetSingleTransferContext(checkpoint);
-            CancellationTokenSource cancellationSource = new CancellationTokenSource(10000000);
+            CancellationTokenSource cancellationSource = new CancellationTokenSource(1000000);
 
             Stopwatch stopWatch = Stopwatch.StartNew();
             Task task;
@@ -175,7 +177,10 @@ namespace BlobHelper
             if (cancellationSource.IsCancellationRequested)
             {
 
-                //autoretry
+                Thread.Sleep(3000);
+                checkpoint = context.LastCheckpoint;
+                context = GetSingleTransferContext(checkpoint);
+                await TransferManager.UploadAsync(LocalSourceFilePath, blob, null, context);
             }
 
             stopWatch.Stop();
@@ -208,7 +213,8 @@ namespace BlobHelper
 
             if (cancellationSource.IsCancellationRequested)
             {
-                //autoretry
+                
+
             }
 
             stopWatch.Stop();

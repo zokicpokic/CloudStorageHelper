@@ -43,11 +43,14 @@ namespace TestApp
         {
             var accName = ConfigurationManager.AppSettings.Get("accountName");
             var accKey = ConfigurationManager.AppSettings.Get("accountKey");
-            Manager mng = new Manager(accName, accKey);
+            var autoRetry = ConfigurationManager.AppSettings.Get("autoretryNum");
+            int autoRetryNum = int.Parse(autoRetry);
+            Manager mng = new Manager(accName, accKey,autoRetryNum);
             mng.Error += Mng_Error;
             mng.BytesTransferred += Mng_BytesTransferred;
             mng.ExposeTaskCancelation += Mng_ExposeTaskCancelation;
-            await mng.TransferLocalFileToAzureBlob(txtFB.Text, cmbBlobContainers.SelectedItem.ToString(), txtBlobName.Text);
+            var res = mng.TransferLocalFileToAzureBlob(txtFB.Text, cmbBlobContainers.SelectedItem.ToString(), txtBlobName.Text);
+            await res;
             this.Close();
         }
 
@@ -69,7 +72,6 @@ namespace TestApp
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            btnCancel.Text = btnCancel.Text.ToLower().Equals("cancel") ? "Retry" : "Cancel";
             if (_taskCancel != null && _taskCancel.cts != null)
                 _taskCancel.cts.Cancel();
         }
