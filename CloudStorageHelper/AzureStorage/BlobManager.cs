@@ -99,7 +99,7 @@ namespace AzureStorage
             SingleTransferContext context = GetSingleTransferContext(checkpoint);
             CancellationTokenSource cancellationSource = new CancellationTokenSource(10000000);
 
-            Stopwatch stopWatch = Stopwatch.StartNew();
+            //Stopwatch stopWatch = Stopwatch.StartNew();
             Task task;
 
             try
@@ -119,7 +119,7 @@ namespace AzureStorage
                 //autoretry
             }
 
-            stopWatch.Stop();
+            //stopWatch.Stop();
         }
 
         public async Task DownloadAzureBlobDirectoryToLocalDirectory(string LocalSourceDirPath, string ContainerName, bool RecursiveDownload = true)
@@ -162,7 +162,7 @@ namespace AzureStorage
             SingleTransferContext context = GetSingleTransferContext(checkpoint);
             CancellationTokenSource cancellationSource = new CancellationTokenSource(1000000);
 
-            Stopwatch stopWatch = Stopwatch.StartNew();
+            //Stopwatch stopWatch = Stopwatch.StartNew();
             Task task;
 
             try
@@ -187,7 +187,7 @@ namespace AzureStorage
                 await TransferManager.UploadAsync(LocalSourceFilePath, blob, null, context);
             }
 
-            stopWatch.Stop();
+            //stopWatch.Stop();
         }
 
         public async Task TransferLocalDirectoryToAzureBlobDirectory(string LocalSourceDirPath, string ContainerName)
@@ -196,7 +196,7 @@ namespace AzureStorage
             TransferCheckpoint checkpoint = null;
             DirectoryTransferContext context = GetDirectoryTransferContext(checkpoint);
             CancellationTokenSource cancellationSource = new CancellationTokenSource(10000000);
-            Stopwatch stopWatch = Stopwatch.StartNew();
+            //Stopwatch stopWatch = Stopwatch.StartNew();
             Task task;
 
             UploadDirectoryOptions options = new UploadDirectoryOptions()
@@ -224,7 +224,7 @@ namespace AzureStorage
 
             }
 
-            stopWatch.Stop();
+            //stopWatch.Stop();
         }
 
         public async Task TransferUrlToAzureBlob(Uri BlobUrl, string ContainerName, string BlobName)
@@ -234,7 +234,7 @@ namespace AzureStorage
             SingleTransferContext context = GetSingleTransferContext(checkpoint);
             CancellationTokenSource cancellationSource = new CancellationTokenSource(10000000);
 
-            Stopwatch stopWatch = Stopwatch.StartNew();
+            //Stopwatch stopWatch = Stopwatch.StartNew();
             Task task;
             try
             {
@@ -252,7 +252,7 @@ namespace AzureStorage
                 //autoretry
             }
 
-            stopWatch.Stop();
+            //stopWatch.Stop();
 
         }
 
@@ -264,7 +264,7 @@ namespace AzureStorage
             SingleTransferContext context = GetSingleTransferContext(checkpoint);
             CancellationTokenSource cancellationSource = new CancellationTokenSource(100000000);
 
-            Stopwatch stopWatch = Stopwatch.StartNew();
+            //Stopwatch stopWatch = Stopwatch.StartNew();
             Task task;
             try
             {
@@ -283,7 +283,7 @@ namespace AzureStorage
                 //autoretry        
             }
 
-            stopWatch.Stop();
+            //stopWatch.Stop();
         }
     }
 }

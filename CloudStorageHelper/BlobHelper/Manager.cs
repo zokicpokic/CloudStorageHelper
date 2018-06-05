@@ -159,7 +159,7 @@ namespace BlobHelper
             SingleTransferContext context = GetSingleTransferContext(checkpoint);
             CancellationTokenSource cancellationSource = new CancellationTokenSource(1000000);
 
-            Stopwatch stopWatch = Stopwatch.StartNew();
+            //Stopwatch stopWatch = Stopwatch.StartNew();
             Task task;
 
             try
@@ -183,7 +183,7 @@ namespace BlobHelper
                 await TransferManager.UploadAsync(LocalSourceFilePath, blob, null, context);
             }
 
-            stopWatch.Stop();
+            ///stopWatch.Stop();
         }
 
         public async Task TransferLocalDirectoryToAzureBlobDirectory(string LocalSourceDirPath, string ContainerName)
