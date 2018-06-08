@@ -131,7 +131,8 @@ namespace AzureStorage
 
             if (cancellationSource.IsCancellationRequested)
             {
-
+                if (_stopFlag)
+                    return;
                 //autoretry
             }
 
@@ -164,6 +165,8 @@ namespace AzureStorage
 
             if (cancellationSource.IsCancellationRequested)
             {
+                if (_stopFlag)
+                    return;
                 //autoretry
             }
 
@@ -194,6 +197,8 @@ namespace AzureStorage
 
             if (cancellationSource.IsCancellationRequested)
             {
+                if (_stopFlag)
+                    return;
                 Thread.Sleep(3000);
                 checkpoint = context.LastCheckpoint;
                 context = GetSingleTransferContext(checkpoint);
@@ -228,6 +233,8 @@ namespace AzureStorage
 
             if (cancellationSource.IsCancellationRequested)
             {
+                if (_stopFlag)
+                    return;
                 Thread.Sleep(3000);
                 checkpoint = context.LastCheckpoint;
                 context = GetDirectoryTransferContext(checkpoint);
