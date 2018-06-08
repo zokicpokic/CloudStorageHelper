@@ -7,9 +7,13 @@ using System.Threading.Tasks;
 
 namespace AzureStorage
 {
-    public class TaskCancel
+    public enum peTaskType { DirectoryToBlob=0, FileToBlob=1}
+
+    public class TaskDescriptor
     {
         public Task task { get; set; }
         public CancellationTokenSource cts { get; set; }
+        public string taskParams { get; set; }
+        public int autoretryNum { get; set; }
     }
 }

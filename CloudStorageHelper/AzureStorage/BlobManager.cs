@@ -19,7 +19,7 @@ namespace AzureStorage
         private string _accountKey = string.Empty;
         private int _autoRecoveryAttempts = 0;
         private CloudStorageAccount _account = null;
-        private List<TaskCancel> _cancellationList = new List<TaskCancel>();
+        private List<TaskDescriptor> _cancellationList = new List<TaskDescriptor>();
 
 
         public event ErrorDelegate Error;
@@ -37,7 +37,7 @@ namespace AzureStorage
         {
             _stopFlag = true;
 
-            foreach (TaskCancel tc in _cancellationList)
+            foreach (TaskDescriptor tc in _cancellationList)
             {
                 tc.cts.Cancel();
             }
