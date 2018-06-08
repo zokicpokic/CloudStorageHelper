@@ -5,6 +5,7 @@ using System.Diagnostics;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.DataMovement;
+using System.Collections.Generic;
 
 namespace AzureStorage
 {
@@ -18,12 +19,29 @@ namespace AzureStorage
         private string _accountKey = string.Empty;
         private int _autoRecoveryAttempts = 0;
         private CloudStorageAccount _account = null;
+        private List<TaskCancel> _cancellationList = new List<TaskCancel>();
+
 
         public event ErrorDelegate Error;
         public event BytesTransferedDelegate BytesTransferred;
         public event ExposeTaskCancelationDelegate ExposeTaskCancelation;
 
-        public bool StopFlag = false;
+        private bool _stopFlag = false;
+
+        public void Start()
+        {
+
+        }
+
+        public void Stop()
+        {
+            _stopFlag = true;
+
+            foreach (TaskCancel tc in _cancellationList)
+            {
+                tc.cts.Cancel();
+            }
+        }
 
         public BlobManager(string accountName, string accountKey, int autoRecoveryAttempts = 0)
         {
@@ -49,7 +67,6 @@ namespace AzureStorage
 
             context.ProgressHandler = new Progress<TransferStatus>((progress) =>
             {
-
                 if (BytesTransferred != null)
                 {
                     BytesTransferred(progress.BytesTransferred);
@@ -177,7 +194,6 @@ namespace AzureStorage
 
             if (cancellationSource.IsCancellationRequested)
             {
-
                 Thread.Sleep(3000);
                 checkpoint = context.LastCheckpoint;
                 context = GetSingleTransferContext(checkpoint);
@@ -216,9 +232,7 @@ namespace AzureStorage
                 checkpoint = context.LastCheckpoint;
                 context = GetDirectoryTransferContext(checkpoint);
                 await TransferManager.UploadDirectoryAsync(LocalSourceDirPath, blobDirectory, options, context);
-
             }
-
         }
 
         public async Task TransferUrlToAzureBlob(Uri BlobUrl, string ContainerName, string BlobName)
