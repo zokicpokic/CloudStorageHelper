@@ -38,6 +38,8 @@ namespace AzureBlobService
 
         protected override void OnStop()
         {
+            _transferManager.Stop();
+            _transferManager = null;
         }
 
         internal void ConsoleStart(string[] args)

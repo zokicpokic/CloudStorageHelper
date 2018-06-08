@@ -27,12 +27,13 @@ namespace AzureBlobService
 
         public void Start()
         {
-
+            _blobManager.Start();
         }
 
         public void Stop()
         {
-
+            _blobManager.Stop();
+            _blobManager = null;
         }
     }
 }

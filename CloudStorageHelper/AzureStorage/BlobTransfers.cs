@@ -1,26 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Diagnostics;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.DataMovement;
-using System.Collections.Generic;
 
 namespace AzureStorage
 {
-    public delegate void ErrorDelegate(Exception ex);
-    public delegate void BytesTransferedDelegate(long bytesTransferred);
-    public delegate void ExposeTaskCancelationDelegate(Task task, CancellationTokenSource cts);
-
-    public class BlobManager
+    public class BlobTransfers
     {
-        private string _accountName = string.Empty;
-        private string _accountKey = string.Empty;
-        private int _autoRecoveryAttempts = 0;
         private CloudStorageAccount _account = null;
-        private List<TaskCancel> _cancellationList = new List<TaskCancel>();
-
 
         public event ErrorDelegate Error;
         public event BytesTransferedDelegate BytesTransferred;
@@ -28,39 +20,17 @@ namespace AzureStorage
 
         private bool _stopFlag = false;
 
-        public void Start()
+        public bool StopFlag
         {
-
-        }
-
-        public void Stop()
-        {
-            _stopFlag = true;
-
-            foreach (TaskCancel tc in _cancellationList)
+            get
             {
-                tc.cts.Cancel();
+                return _stopFlag;
             }
-        }
-
-        public BlobManager(string accountName, string accountKey, int autoRecoveryAttempts = 0)
-        {
-            try
+            set
             {
-                _accountKey = accountKey;
-                _accountName = accountName;
-                _autoRecoveryAttempts = autoRecoveryAttempts;
-                string storageConnectionString = "DefaultEndpointsProtocol=https;AccountName=" + accountName + ";AccountKey=" + accountKey;
-                _account = CloudStorageAccount.Parse(storageConnectionString);
+                _stopFlag = value;
             }
-            catch (Exception ex)
-            {
-                if (Error != null)
-                    Error(ex);
-            }
-
-        }
-
+        }    
         public SingleTransferContext GetSingleTransferContext(TransferCheckpoint checkpoint)
         {
             SingleTransferContext context = new SingleTransferContext(checkpoint);
@@ -144,7 +114,6 @@ namespace AzureStorage
             TransferCheckpoint checkpoint = null;
             DirectoryTransferContext context = GetDirectoryTransferContext(checkpoint);
             CancellationTokenSource cancellationSource = new CancellationTokenSource(10000000);
-            Stopwatch stopWatch = Stopwatch.StartNew();
             Task task;
 
             DownloadDirectoryOptions options = new DownloadDirectoryOptions()
@@ -169,9 +138,8 @@ namespace AzureStorage
                     return;
                 //autoretry
             }
-
-            stopWatch.Stop();
         }
+
         public async Task TransferLocalFileToAzureBlob(string LocalSourceFilePath, string ContainerName, string BlobName)
         {
 
